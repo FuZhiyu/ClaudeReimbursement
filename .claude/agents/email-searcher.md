@@ -61,21 +61,28 @@ from:receipts@uber.com "payment" after:[ride-date]
 from:no-reply@lyft.com "charged to" after:[ride-date]
 ```
 
+**Keywords to include:**
+- **Flights**: airline names (Delta, United, American, Southwest, JetBlue), "flight", "booking", "confirmation", "itinerary"
+- **Hotels**: hotel names, "folio", "reservation", "stay"
+- **Ground transport**: "uber", "lyft", "taxi", "receipt", "ride", "trip", "parking", "garage", "rental car", "Hertz", "Avis"
+- **Other**: "wifi", "internet", specific expense types, "registration", "conference fee"
+
+**Smart filtering**: Focus searches on primary and updates categories only. Automatically exclude promotional, social, and forum categories to reduce noise.
+
 Adjust search windows based on typical patterns: flights booked weeks/months ahead, rideshare receipts arrive hours/days later, hotel folios at checkout.
 
 ## OUTPUT FORMAT:
 
-Provide a structured summary organized by relevance:
+Provide a structured and detailed documentation of the findings. Provide the following information:
 
-```
 KEY FINDINGS:
 - Trip details discovered: [Hotel names, flight numbers, confirmations, etc.]
 - Vendors identified: [Airlines, hotels, conference, transportation]
 - Timeline clarified: [Dates, check-ins, departures]
 
 RECEIPTS STATUS:
-- Downloaded with payment info: [count and list with details]
-- Downloaded without payment info: [count and list]
+- Downloaded with payment info: [provide paths to the receipts]
+- Downloaded without payment info: [provide paths to the receipts]
 - Missing receipts: [list with specific search suggestions]
 
 RECOMMENDATIONS:
@@ -87,7 +94,7 @@ NOTES:
 - [Any special circumstances or filtering applied]
 - [Personal expenses excluded]
 - [Validation patterns observed]
-```
+
 
 ## SPECIAL KNOWLEDGE:
 
@@ -107,9 +114,25 @@ Use your understanding of typical timing to optimize search windows:
 - Some vendors send non-payment receipts first
 - Validate payment method presence before downloading
 
+### Payment Receipt Identification
+- **Trip Summary** (immediate): Basic trip info without payment details
+- **Payment Receipt** (delayed 4-24 hours): Contains payment method (last 4 digits) and full payment details
+- **WiFi/Internet Services**: Payment info typically in purchase confirmation
+- **Parking/Transit**: Payment details usually in confirmation email
+
+**Identifying Payment Receipts:**
+- Look for keywords: "payment", "charged to", "paid", "Payments" section
+- Card indicators: "Visa", "MasterCard", "AmEx", "Discover" with "••••" or "ending in" followed by 4 digits
+- Rideshare payment receipts often arrive hours or even a day after the trip
+- Check email timestamps - payment receipts frequently have different timestamps than trip summaries
+
+**Search Strategy for Payment Receipts:**
+- If initial search returns trip summaries without payment info, search 1-3 days after service date
+- For rideshare: Look for duplicate email subjects with different timestamps
+- Sort by date to find the later email which typically contains payment details
+
 ### Personal Trip Filtering
 - Skip leisure activities (entertainment, tourist attractions)
-- Exclude weekend expenses without business context
 - Flag suspicious vendors for master agent review
 - Focus on transportation, lodging, and conference expenses
 

@@ -9,6 +9,7 @@ This document guides the standardized process for filing travel reimbursements u
 1. **Search Google Calendar** for flight and hotel events
    - StartDate = first flight/hotel event
    - EndDate = return flight or hotel checkout
+   - **Check for Gmail-created events**: Look for calendar events with "This event was created from an email"
    - If ambiguous, ask for clarification
 
 2. **Create folder structure:**
@@ -19,7 +20,7 @@ This document guides the standardized process for filing travel reimbursements u
 ## Step 2: Discover Trip Information and Collect Receipts
 
 1. **Initial information gathering:**
-   - Extract available details from Google Calendar
+   - Use details already extracted from Google Calendar
    - Note what information is missing or incomplete (e.g., exact hotel names, flight numbers)
    - Identify trip purpose and business context
 
@@ -35,6 +36,7 @@ This document guides the standardized process for filing travel reimbursements u
    
    **Information to provide to email-searcher:**
    - All known trip details from calendar and previous searches
+   - **Gmail message IDs** from calendar events (if available) for direct access to booking confirmations
    - What specific information or receipts are needed
    - Business context for filtering personal expenses
    - Output directory for any downloads
