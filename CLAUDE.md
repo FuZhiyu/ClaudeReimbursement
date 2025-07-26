@@ -16,39 +16,46 @@ This document guides the standardized process for filing travel reimbursements u
    - Create `records.md` to document receipts
    - Create `records/` subfolder for email downloads
 
-## Step 2: Collect Receipts
+## Step 2: Discover Trip Information and Collect Receipts
 
-Use the receipt-collector agent to find and download all receipts with payment information:
+1. **Initial information gathering:**
+   - Extract available details from Google Calendar
+   - Note what information is missing or incomplete (e.g., exact hotel names, flight numbers)
+   - Identify trip purpose and business context
 
-```
-Task(
-  subagent_type="receipt-collector",
-  description="Find [City] trip receipts",
-  prompt="""
-  Trip: [City] from [StartDate] to [EndDate]
-  Output directory: ./[TripFolder]/records/
-  
-  Search Gmail for dates: [StartDate-1] to [EndDate+1]
-  
-  Look for these vendors and keywords:
-  - Airlines: [specific airlines from calendar], "flight", "booking", "confirmation"
-  - Hotels: [specific hotel name], "folio", "reservation", "stay"
-  - Ground transport: "uber", "lyft", "taxi", "parking", "receipt", "ride"
-  - Other: "wifi", "internet", "registration", "conference fee"
-  
-  CRITICAL REMINDERS:
-  - Rideshare payment receipts arrive 4-24 hours after service
-  - Hotel folios sent at/after checkout
-  - Skip emails saying "This is not a payment receipt"
-  - Download using: download_gmail_message.py <message_id> <output_dir>
-  
-  Return summary of:
-  - Total receipts found with payment info
-  - Missing receipts that need follow-up
-  - Any download failures
-  """
-)
-```
+2. **Iterative discovery with email-searcher agent:**
+   
+   The email-searcher agent serves as an intelligent filter between Gmail and the master agent, preventing information overload while finding relevant trip details and receipts.
+   
+   **Using the email-searcher:**
+   - Start with whatever information is available from calendar
+   - Let the agent determine optimal search strategies based on what's known
+   - Iterate as needed to fill in missing details or collect receipts
+   - The agent understands typical booking patterns (flights booked earlier than hotels, rideshare receipts arrive after service, etc.)
+   
+   **Information to provide to email-searcher:**
+   - All known trip details from calendar and previous searches
+   - What specific information or receipts are needed
+   - Business context for filtering personal expenses
+   - Output directory for any downloads
+   - Any special circumstances or vendors to focus on
+   
+   **What email-searcher returns:**
+   - Structured summary of findings (not full emails)
+   - Key information extracted (vendor names, dates, confirmation numbers)
+   - List of downloaded receipts with payment validation
+   - Recommendations for follow-up searches
+   - Missing items that need attention
+
+3. **Update records.md with relevant information:**
+   
+   After each email-searcher iteration, update `records.md` with:
+   - Important trip details discovered (hotel names, flight numbers, etc.)
+   - Receipt downloads and their payment methods
+   - Missing receipts that need follow-up
+   - Any issues or special notes
+   
+   This maintains a clear audit trail of the discovery process.
 
 ## Step 3: Confirm with User
 
@@ -134,7 +141,9 @@ Uber Airport to Hotel	40.95	USD	Transport	1009	Uber_Jul8_Evening.eml	July 8 even
 
 - [ ] Find trip dates from Calendar
 - [ ] Create folder structure  
-- [ ] Run receipt-collector agent
+- [ ] Run email-searcher for trip discovery
+- [ ] Iterate with email-searcher for missing details
+- [ ] Collect receipts with email-searcher
 - [ ] Review downloaded receipts
 - [ ] Confirm with user
 - [ ] Create Receipts/ folder
