@@ -1,0 +1,12 @@
+# Ignore everything by default
+*
+
+# But track these files
+!.gitignore
+!CLAUDE.md
+!README.md
+!download_gmail_message.py
+!README_gmail_downloader.md
+
+# Never ignore git files
+!.git/
