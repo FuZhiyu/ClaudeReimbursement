@@ -1,98 +1,78 @@
-# Travel Reimbursement Workflow with Claude Code
+# Reimbursement Preparer with Claude Code
 
-An automated workflow for processing academic travel reimbursements using Claude Code with Gmail and Google Calendar integration. This system streamlines the tedious process of collecting receipts, organizing expenses, and generating reimbursement packages.
+## What is this?
 
-## Overview
+This is a fine-tuned workflow that instructs Claude Code to pull travel information from Gmail and Google Calendar, and compile a reimbursement package with expense breakdown and receipts. 
 
-This workflow helps academic researchers efficiently process travel reimbursements by:
+In short, you can do the following with minimal human intervention:
 
-- **Automatically discovering trip dates** from Google Calendar events
-- **Intelligently searching Gmail** for booking confirmations and receipts
-- **Organizing expenses** into standardized categories and formats
-- **Generating final reimbursement packages** ready for institutional submission
-- **Tracking per diem calculations** with conference meal deductions
+<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 30px;">
+  <img src="img/image-3.png" width="45%" />
+  <div style="font-size: 60px; color: #666;">➡️</div>
+  <div style="display: flex; flex-direction: column; gap: 15px;">
+    <img src="img/image-4.png" width="400px" />
+    <img src="img/image-5.png" width="400px" />
+  </div>
+</div>
 
-## Key Features
+## Who's this for?
 
-- **Smart Trip Discovery**: Finds flight and hotel events in your calendar to determine trip dates
-- **Intelligent Email Search**: Uses specialized email-searcher agent to find relevant receipts while filtering out noise
-- **Automated Receipt Collection**: Downloads and organizes receipts from Gmail
-- **Expense Categorization**: Automatically categorizes expenses (Air, Hotel, Transport, Meals, Other)
-- **Per Diem Calculations**: Handles complex per diem rules with conference meal deductions
-- **Payment Method Tracking**: Extracts payment method details from receipts
-- **TSV Export**: Generates institution-ready expense summaries
+I made this for my own personal use. But if you also:
 
-## Prerequisites
+- Are more tired of manually searching for and compiling travel receipts than playing around with LLMs
+- Receive travel bookings and receipts in your Gmail
+- Use Claude Code (Gemini or other LLM agents that support MCP may also work)
 
-### Required Software
-
-1. **Claude Code** - Anthropic's official CLI
-   - Install from: https://docs.anthropic.com/en/docs/claude-code
-
-2. **Gmail MCP Server** - For Gmail integration
-   - Install from: https://github.com/GongRzhe/Gmail-MCP-Server
-   - Provides email search, reading, and attachment download capabilities
-
-3. **Google Calendar MCP** - For calendar integration  
-   - Install from: https://github.com/nspady/google-calendar-mcp
-   - Enables automatic trip date discovery from calendar events
-
-### Setup Requirements
-
-- Gmail account with travel-related emails
-- Google Calendar with flight/hotel bookings
-- Institutional email confirmations and receipts
-- Claude Code configured with MCP servers
+This may be handy for you as well. 
 
 ## Installation
 
-1. **Install Claude Code**
-   ```bash
-   # Follow installation guide at:
-   # https://docs.anthropic.com/en/docs/claude-code
-   ```
+First, clone this repository:
 
-2. **Install Gmail MCP Server**
-   ```bash
-   git clone https://github.com/GongRzhe/Gmail-MCP-Server
-   cd Gmail-MCP-Server
-   # Follow setup instructions in repository
-   ```
+```bash
+git clone https://github.com/FuZhiyu/AI-Reimbursement-Preparer.git
+cd AI-Reimbursement-Preparer
+```
 
-3. **Install Google Calendar MCP**
-   ```bash
-   git clone https://github.com/nspady/google-calendar-mcp
-   cd google-calendar-mcp
-   # Follow setup instructions in repository
-   ```
+Most of the heavy lifting is done by the Claude Code agent and two MCP servers:
 
-4. **Configure MCP Servers in Claude Code**
-   - Add Gmail and Calendar MCP servers to your Claude Code configuration
-   - Ensure proper authentication for both Gmail and Google Calendar APIs
+2. Install [Gmail-MCP-Server](https://github.com/GongRzhe/Gmail-MCP-Server) and [Google-Calendar-MCP](https://github.com/nspady/google-calendar-mcp)
+
+   - Follow the instructions in the repositories to install them on Claude Desktop and complete authentication
+   - In terminal, run `claude mcp add-from-claude-desktop -s user` to add the MCP servers to your Claude Code configuration
+3. Run `pip install -r requirements.txt` to install dependencies for the Python scripts
+
+4. Set up Gmail API credentials for the Python gmail downloader script:
+   - Create a `.env` file in the project root with:
+     ```
+     GMAIL_CREDENTIALS_PATH=/path/to/the/credentials/used/by/GmailMCP.json
+     ```
+
+
 
 ## Usage
 
 ### Basic Workflow
 
-1. **Start the Process**
+1. **Start the Process:**: In Claude Code under the project folder, request:
    ```
-   I need help filing a reimbursement for my recent trip to [City] for [Conference/Purpose]
+   I need help filing a reimbursement for my trip in [date range] to [City] for [Conference/Purpose]
    ```
 
 2. **Claude Code will automatically:**
    - Search your Google Calendar for trip dates
    - Create organized folder structure
-   - Use email-searcher agent to find relevant receipts
+   - Use email-searcher agent to find relevant travel information and receipts from your Gmail
    - Download and categorize expenses
    - Generate final reimbursement package
 
 3. **Review and Submit**
    - Verify the generated `reimbursement_summary.tsv`
    - Check the `Receipts/` folder for supporting documents
-   - Submit to your institution's reimbursement system
+   - Submit to your institution's reimbursement system, or ask Claude Code to "use the Gmail MCP to draft an email with the reimbursement package attached to my assistant"
+
 
 ### Example Output Structure
-
 ```
 2025-03-Chicago-Conference/
 ├── records.md                     # Detailed trip documentation
@@ -105,45 +85,23 @@ This workflow helps academic researchers efficiently process travel reimbursemen
     └── [email archives]
 ```
 
-## Expense Categories
-
-- **Air**: Flights, airline fees, seat upgrades, WiFi
-- **Hotel**: Room charges, taxes, fees (excludes personal items)
-- **Transport**: Uber, Lyft, taxi, parking, trains
-- **Meals**: Restaurant charges or per diem calculations
-- **Other**: Conference fees, miscellaneous business expenses
 
 ## Example
 
 See the `2025-03-Chicago-Example/` folder for a complete fictional example showing:
 - Detailed trip records with receipt documentation
 - Final TSV summary with proper categorization
-- Empty Receipts folder structure for final package
+- Receipts folder with documents (empty for illustration)
 
-## Workflow Documentation
+## Details and Customization
 
-Detailed workflow instructions are available in `CLAUDE.md`, including:
-- Step-by-step process for each reimbursement
-- Email search patterns and strategies
-- Per diem calculation rules
-- Troubleshooting common issues
+The main workflow is written in natural language in the following files:
 
-## Benefits
+- `CLAUDE.md`: Main step-by-step instructions for Claude Code 
+- `.claude/agents/email-searcher.md`: A sub-agent that uses the Gmail MCP server to search for information in your Gmail
 
-- **Time Savings**: Reduces reimbursement processing from hours to minutes
-- **Accuracy**: Automated categorization and calculation reduces errors
-- **Completeness**: Systematic search ensures no receipts are missed
-- **Compliance**: Generates institution-ready documentation
-- **Audit Trail**: Maintains detailed records of all expenses and sources
+These files are human-readable in the markdown format, and you can edit them to customize the workflow. Some instructions in `CLAUDE.md` might be institution-specific, and you can edit them to fit your needs.
 
-## Support
+**Why sub-agents?**: Searching through your Gmail can easily overwhelm the context window of the main agent, and most of the information is not relevant. Therefore, the sub-agent is used as an information filter for context window preservation.
 
-For issues with:
-- **Claude Code**: https://docs.anthropic.com/en/docs/claude-code
-- **Gmail MCP**: https://github.com/GongRzhe/Gmail-MCP-Server/issues
-- **Calendar MCP**: https://github.com/nspady/google-calendar-mcp/issues
-- **This Workflow**: Check `CLAUDE.md` for detailed troubleshooting
-
-## License
-
-This workflow is provided as-is for academic and research use.
+The Python script `download_gmail_message.py` is used to download email messages from your Gmail. As of now, the read and download function of the Gmail MCP is limited. In the future it can be dropped. 
