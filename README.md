@@ -20,6 +20,8 @@ In short, you can do the following with minimal human intervention:
   </div>
 </div>
 
+(Information in this example is fictionalized based off a real reimbursement case)
+
 ## Who's this for?
 
 I made this for my own personal use. But if you also:
