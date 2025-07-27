@@ -30,8 +30,8 @@ This may be handy for you as well.
 First, clone this repository:
 
 ```bash
-git clone https://github.com/FuZhiyu/AI-Reimbursement-Preparer.git
-cd AI-Reimbursement-Preparer
+git clone https://github.com/FuZhiyu/ClaudeReimbursement.git
+cd ClaudeReimbursement
 ```
 
 Most of the heavy lifting is done by the Claude Code agent and two MCP servers:
