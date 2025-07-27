@@ -1,0 +1,15 @@
+ItemService	Amount	Currency	Category	PaymentMethodLast4	ReceiptFileName	Notes
+United Airlines JFK-ORD-JFK Original Booking	387.45	USD	Air	2847	United_Original_Booking.eml	Confirmation #8ZKTMN, later changed
+United Airlines Flight Change Fee	95.30	USD	Air	2847	United_Flight_Change.eml	New total $482.75 includes original credit
+United Airlines WiFi UA1234	12.99	USD	Air	2847	United_WiFi_Receipt.eml	JFK-ORD flight
+Hyatt Regency Chicago Room 3 nights	735.00	USD	Hotel	2847	HyattRegency_Folio.pdf	$245/night March 15-18
+Hyatt Regency Chicago State Tax	53.29	USD	Hotel	2847	HyattRegency_Folio.pdf	7.25% tax
+Hyatt Regency Chicago City Tax	33.08	USD	Hotel	2847	HyattRegency_Folio.pdf	4.50% tax
+Hyatt Regency Chicago Resort Fee	25.00	USD	Hotel	2847	HyattRegency_Folio.pdf	Resort fee
+Lyft Home to JFK Airport	34.50	USD	Transport	2847	Lyft_Mar15_Airport.eml	March 15 departure
+Lyft ORD Airport to Michigan Ave	28.75	USD	Transport	2847	Lyft_Mar15_FromAirport.eml	March 15 arrival
+Lyft Michigan Ave to Hyatt Regency	15.80	USD	Transport	2847	Lyft_Mar15_ToHotel.eml	Final leg to hotel
+Lyft Hotel to University of Chicago	22.40	USD	Transport	2847	Lyft_Mar16_Conference.eml	March 16 conference
+Lyft Hotel to River North Dinner	16.90	USD	Transport	2847	Lyft_Mar18_Dinner.eml	March 18 evening
+Lyft River North to ORD Airport	31.25	USD	Transport	2847	Lyft_Mar18_ToAirport.eml	March 18 departure
+Per Diem 3.0 days	172.00	USD	Meals	N/A	N/A	Minus welcome dinner and 1 lunch
