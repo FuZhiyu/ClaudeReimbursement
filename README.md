@@ -6,12 +6,17 @@ This is a fine-tuned workflow that instructs Claude Code to pull travel informat
 
 In short, you can do the following with minimal human intervention:
 
-<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 30px;">
-  <img src="img/image-3.png" width="45%" />
-  <div style="font-size: 60px; color: #666;">➡️</div>
-  <div style="display: flex; flex-direction: column; gap: 15px;">
-    <img src="img/image-4.png" width="400px" />
-    <img src="img/image-5.png" width="400px" />
+<div align="center">
+  <!-- Top: Large first figure -->
+  <img src="img/image-3.png" width="60%" />
+  
+  <!-- Down arrow -->
+  <div style="font-size: 60px; color: #666; margin: 20px 0;">⬇️</div>
+  
+  <!-- Bottom: Two figures horizontally aligned -->
+  <div style="display: flex; align-items: center; justify-content: center; gap: 40px;">
+    <img src="img/image-4.png" width="350px" />
+    <img src="img/image-5.png" width="350px" />
   </div>
 </div>
 
